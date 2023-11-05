@@ -26,8 +26,11 @@
   <div>
     <div class="join">
     <span>계정이 없으신가요?&nbsp;&nbsp;</span>
-    <span @click="join">가입하기</span>
+    <button type="button" @click="$router.push('/join')">가입하기</button>
   </div>
+
+  
+
   </div>
 </div>
 
@@ -102,7 +105,7 @@ export default {
       console.log("this.id="+this.id);
       console.log("this.pwd="+this.pwd);
     },
-    
+
   }
 };
 </script>
