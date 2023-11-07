@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from "axios"
 
 export default ({
   name: "JoinView",
@@ -67,13 +67,13 @@ export default ({
       this.pwd = document.querySelector('#pwd').value;
       this.nick = document.querySelector('#nick').value;
 
-      const data = {name: this.name, 
-                    phone: this.phone,
-                    id: this.id,
-                    pwd: this.pwd,
-                    nick: this.nick}
+      const data = {user_name: this.name, 
+                    user_phone: this.phone,
+                    user_id: this.id,
+                    user_pwd: this.pwd,
+                    user_nick: this.nick}
 
-      axios.post('http://localhost:8083/memberJoin', data, {
+      axios.post('http://localhost:8090/memberJoin', JSON.stringify(data), {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -81,15 +81,8 @@ export default ({
         alert('통신 성공!')
       }).catch(error => {
         console.log(error)
-        this.$router.push('/main');
+        alert('실패')
       })
-
-      // axios.get('http://localhost:8083/memberJoin/'+this.name).then((res) => {
-      //   this.$router.replace('/main');
-      // }).catch(error => {
-      //   console.log(error);
-  
-      // })
 
     },
     }

@@ -9,13 +9,13 @@ module.exports = defineConfig({
   chainWebpack: config => {
     config.plugins.delete('prefetch');
   },
-  devServer: {  
+  devServer: {
+    
     proxy: {
       '/': {
-        target: "http://localhost:8083",
+        target: "http://localhost:8090",
         changeOrigin: true,
         ws: false,
-        pathRewrite: {'^/':''},
       }
     }
   },  
