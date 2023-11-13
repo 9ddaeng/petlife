@@ -7,10 +7,10 @@
       <input type="text" class="userInput" id="id" v-bind:value="this.IDinformation" @click="cleanId">
     </div>
     <div class="border">
-      <input type="text" class="userInput" id="pwd" v-bind:value="this.PWDinformation" @keydown.enter="sendUserInfo" @click="cleanPwd">
+      <input type="password" class="userInput" id="pwd" v-bind:value="this.PWDinformation" @keydown.enter="sendUserInfo" @click="cleanPwd">
     </div>
     <div class="border">
-      <button type="button" id="login" @click="sendUserInfo">로그인하기</button>
+      <button type="button" id="login" @click="login">로그인하기</button>
     </div>
     <div class="find">
       <p @click="findId">아이디 찾기</p>
@@ -28,8 +28,6 @@
     <span>계정이 없으신가요?&nbsp;&nbsp;</span>
     <button type="button" @click="$router.push('/join')">가입하기</button>
   </div>
-
-  
 
   </div>
 </div>
@@ -96,7 +94,7 @@ export default {
     };
   },
   methods: {
-    sendUserInfo() {
+    login() {
       this.user_id = document.querySelector('#id').value;
       this.user_pwd = document.querySelector('#pwd').value;
 
@@ -117,7 +115,6 @@ export default {
             alert('일치하는 회원 정보가 없습니다.');
             window.location.reload();
           }
-
         }).catch(error => {
           console.log(error)
         })

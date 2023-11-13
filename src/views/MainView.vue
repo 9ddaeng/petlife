@@ -1,14 +1,22 @@
 <template>
-  <sidebar></sidebar>
+  <button type="button" id="myModal" @click="showMessageModal">메세지</button>
+  
 </template>
 
 <script>
-import sidebar from "@/components/sidebar.vue";
+
 export default ({
   name: "MainView",
-  components: {
-    sidebar
-  }
+  data() {
+    return {
 
+
+    }
+  },
+  methods: {
+    showMessageModal() {
+      
+    }
+  }
 })
 </script>

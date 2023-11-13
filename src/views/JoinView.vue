@@ -42,7 +42,7 @@
   <div class="row mb-3">
     <label for="nick" class="col-sm-2 col-form-label">닉네임</label>
     <div class="col-sm-10">
-      <input type="nick" class="form-control" id="nick">
+      <input type="nick" class="form-control" id="nick" @keydown.enter="validateInfo">
     </div>
   </div>
   <div>
@@ -61,6 +61,7 @@
 
 <script>
 import axios from "axios"
+import { AlreadyHasActiveConnectionError } from "typeorm";
 
 export default ({
   name: "JoinView",
@@ -77,11 +78,12 @@ export default ({
       pwd: '',
       nick: '',
       check: 0,
+      nameInput: 1,
 
     }
   },
   methods: {
-    async validateInfo() {
+    validateInfo() {
 
       this.name = document.querySelector('#name').value;
       this.phone = document.querySelector('#phone').value;
@@ -94,10 +96,41 @@ export default ({
       if(this.pwd.length <=7 || this.pwd.length >=16) {this.pwdInfo = 1}
       if(this.nick.length ==0 || this.nick.length >= 10) {this.nickInfo = 1}
 
-      await this.memberJoin();
+      if(this.nameInfo == 0 && this.idInfo == 0 && this.pwdInfo == 0 && this.nickInfo == 0) {
+        const data = {
+            user_name: this.name, 
+            user_phone: this.phone,
+            user_id: this.id,
+            user_pwd: this.pwd,
+            user_nick: this.nick
+        }
+  
+      axios.post('http://localhost:8090/validateJoinUser', JSON.stringify(data), {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }).then((res) => {
+              if(res.data == 0) {
+                alert("이미 가입한 회원정보입니다.");
+              } else {
+                this.memberJoin();
+                alert('가입 완료');
+              }
+            }).catch(error => {
+              console.log(error);
+            })
+        } else {
+          stop;
+        }
 
     },
-    async memberJoin() {
+    memberJoin() {
+
+      this.name = document.querySelector('#name').value;
+      this.phone = document.querySelector('#phone').value;
+      this.id = document.querySelector('#id').value;
+      this.pwd = document.querySelector('#pwd').value;
+      this.nick = document.querySelector('#nick').value;
 
       if(!this.name || !this.phone || !this.id || !this.pwd || !this.nick) {
         this.check = 1;
@@ -109,17 +142,22 @@ export default ({
                     user_pwd: this.pwd,
                     user_nick: this.nick}
 
-        axios.post('http://localhost:8090/memberJoin', JSON.stringify(data), {
-          headers: {
-            'Content-Type': 'application/json'
+      axios.post('http://localhost:8090/memberJoin', JSON.stringify(data), {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            }).then((res) => {
+              if(res.data.user_num == 0) {
+                alert('이미 가입한 회원입니다.');
+                this.$router.push('/join');
+              } else {
+                this.$store.commit('user_num', res.data)
+                this.$router.push('/');
+              }
+            }).catch(error => {
+              console.log(error);
+            })
           }
-        }).then((res) => {
-          this.$store.commit('user_num', res.data)
-          this.$router.push('/');
-        }).catch(error => {
-          console.log(error)
-        })
-      }
     },
     }
 
@@ -150,4 +188,5 @@ export default ({
     margin-top: 5%;
     height: 30px;
   }
+
 </style>

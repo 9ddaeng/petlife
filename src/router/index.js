@@ -19,7 +19,8 @@ const routes = [
     path: "/main",
     name: "Main",
     component: MainView
-  }
+  },
+
 ];
 
 const router = createRouter({

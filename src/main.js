@@ -10,3 +10,4 @@ import axios from 'vue-axios'
 const app = createApp(App)
 app.config.globalProperties.axios = axios;
 app.use(store).use(router).mount('#app')
+
