@@ -110,12 +110,12 @@ export default {
             'Content-Type': 'application/json'
           }
         }).then((res) => {
-          if(res.data !== null) {
+          if(res.data.user_num != 0) {
             this.$store.commit('user_num', res.data)
             this.$router.push('/main');
           } else {
             alert('일치하는 회원 정보가 없습니다.');
-            stop;
+            window.location.reload();
           }
 
         }).catch(error => {
