@@ -1,13 +1,13 @@
 <template>
 
-<div class="inline">
+  <div class="inline">
   <firstmeet class="cat"></firstmeet>
   <div>
     <div class="border">
-      <input type="text" class="userInput" id="id" v-bind:value="this.IDinformation" @keydown="userID">
+      <input type="text" class="userInput" id="id" v-bind:value="this.IDinformation" @click="cleanId">
     </div>
     <div class="border">
-      <input type="text" class="userInput" id="pwd" v-bind:value="this.PWDinformation" @keydown="userPWD" @keydown.enter="sendUserInfo">
+      <input type="text" class="userInput" id="pwd" v-bind:value="this.PWDinformation" @keydown.enter="sendUserInfo" @click="cleanPwd">
     </div>
     <div class="border">
       <button type="button" id="login" @click="sendUserInfo">로그인하기</button>
@@ -78,6 +78,7 @@
 
 <script>
 import firstmeet from "@/components/firstmeet.vue";
+import axios from "axios";
 
 export default {
   name: "HomeView",
@@ -86,25 +87,47 @@ export default {
   },
   data() {
     return {
-      IDinformation: "이메일 혹은 아이디",
+      IDinformation: "아이디",
       PWDinformation: "비밀번호",
       id: '',
-      pwd: ''
+      pwd: '',
+      user_id: '',
+      user_pwd: '',
     };
   },
   methods: {
-    userID() {
-      this.id = document.querySelector('#id');
+    sendUserInfo() {
+      this.user_id = document.querySelector('#id').value;
+      this.user_pwd = document.querySelector('#pwd').value;
+
+      const data = {
+        user_id: this.user_id,
+        user_pwd: this.user_pwd
+      }
+
+      axios.post('http://localhost:8090/login', JSON.stringify(data), {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then((res) => {
+          if(res.data !== null) {
+            this.$store.commit('user_num', res.data)
+            this.$router.push('/main');
+          } else {
+            alert('일치하는 회원 정보가 없습니다.');
+            stop;
+          }
+
+        }).catch(error => {
+          console.log(error)
+        })
+    },
+    cleanId() {
       this.IDinformation = "";
     },
-    userPWD() {
-      this.pwd = document.querySelector('#pwd');
+    cleanPwd() {
       this.PWDinformation = "";
-    },
-    sendUserInfo() {
-      console.log("this.id="+this.id);
-      console.log("this.pwd="+this.pwd);
-    },
+    }
 
   }
 };
