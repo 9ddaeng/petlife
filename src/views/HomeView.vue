@@ -37,7 +37,7 @@
 <style>
   .inline {
     margin-top: 200px;
-    column-count:3;
+    column-count:2;
     position:relative;
     margin-left: 450px;
   }
