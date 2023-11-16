@@ -6,7 +6,7 @@
 		<!-- Content
 		<router-view /> -->
 	</div>
-  
+  <p>test</p>
 </template>
 
 <script>
