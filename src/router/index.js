@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import JoinView from "../views/JoinView.vue";
 import MainView from "../views/MainView.vue";
+import FindInfo from "../views/FindInfo.vue";
 
 
 const routes = [
@@ -20,6 +21,11 @@ const routes = [
     name: "Main",
     component: MainView
   },
+  {
+    path: "/findInfo",
+    name: "FindInfo",
+    component: FindInfo
+  }
 
 ];
 
