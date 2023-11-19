@@ -1,25 +1,25 @@
 <template>
 
   <div class="inline">
-  <firstmeet class="cat"></firstmeet>
+  <!--<firstmeet class="cat" id="cat"></firstmeet>-->
   <div>
     <div class="border">
       <input type="text" class="userInput" id="id" v-bind:value="this.IDinformation" @click="cleanId">
     </div>
     <div class="border">
-      <input type="password" class="userInput" id="pwd" v-bind:value="this.PWDinformation" @keydown.enter="sendUserInfo" @click="cleanPwd">
+      <input type="password" class="userInput" id="pwd" v-bind:value="this.PWDinformation" @keydown.enter="login" @click="cleanPwd">
     </div>
     <div class="border">
       <button type="button" id="login" @click="login">로그인하기</button>
     </div>
     <div class="find">
-      <p @click="findId">아이디 찾기</p>
+      <button @click="findId">아이디 찾기</button>
     </div>
     <div class="find">
       <p>|</p>
     </div>
     <div class="find">
-      <p @click="findPwd">비밀번호 찾기</p>
+      <button @click="findPwd">비밀번호 찾기</button>
     </div>
   </div>
   
@@ -124,6 +124,12 @@ export default {
     },
     cleanPwd() {
       this.PWDinformation = "";
+    },
+    findId() {
+      this.$router.push("/findInfo")
+    },
+    findPwd() {
+      this.$router.push("/findInfo")
     }
 
   }
